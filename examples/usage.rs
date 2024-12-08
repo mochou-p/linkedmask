@@ -35,5 +35,12 @@ fn main() {
 
         println!("{lm}");
     }
+    {
+        let mut lm = LinkedMask::<u8>::new();
+
+        lm.add(50);
+
+        println!("{lm}");
+    }
 }
 

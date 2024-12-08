@@ -24,10 +24,14 @@ macro_rules! impl_uint {
                 const ONE:  Self    = 1;
                 const BITS: u32     = Self::BITS;
 
+                #[inline]
+                #[must_use]
                 fn format(value: &Self::T) -> String {
                     format!($fstring, value)
                 }
 
+                #[inline]
+                #[must_use]
                 fn shl(&self, other: u32) -> Self::T {
                     self << other
                 }

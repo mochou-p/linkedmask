@@ -4,7 +4,7 @@ mod color;
 mod node;
 mod uint;
 
-use core::fmt::{Display, Formatter, Result as FmtResult};
+use core::{any::type_name, fmt::{Display, Formatter, Result as FmtResult}};
 
 use {node::Node, uint::UnsignedInteger};
 
@@ -39,7 +39,14 @@ where
 {
     #[inline]
     fn fmt(&self, f: &mut Formatter) -> FmtResult {
-        write!(f, "{}", self.data.get_string(true))
+        let (string, count) = self.data.get_string(true);
+
+        write!(
+            f,
+            "{}x{count}: {string}{}",
+            type_name::<U>(),
+            color::RESET
+        )
     }
 }
 

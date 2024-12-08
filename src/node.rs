@@ -24,21 +24,28 @@ where
     }
 
     #[must_use]
-    pub(super) fn get_string(&self, indicator: bool) -> String {
-        format!(
-            "{}{}{}{}",
-            if let Some(next) = &self.next_option {
-                next.get_string(!indicator)
-            } else {
-                String::new()
-            },
-            if indicator {
-                color::DARK
-            } else {
-                color::LIGHT
-            },
-            U::format(&self.value),
-            color::RESET
+    pub(super) fn get_string(&self, indicator: bool) -> (String, u16) {
+        let mut count = 1;
+
+        let string = if let Some(next) = &self.next_option {
+            let (string_, count_) = next.get_string(!indicator);
+            count += count_;
+            string_
+        } else {
+            String::new()
+        };
+
+        (
+            format!(
+                "{string}{}{}",
+                if indicator {
+                    color::DARK
+                } else {
+                    color::LIGHT
+                },
+                U::format(&self.value)
+            ),
+            count
         )
     }
 }
