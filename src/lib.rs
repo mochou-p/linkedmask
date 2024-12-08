@@ -2,31 +2,41 @@
 
 mod color;
 mod node;
+mod uint;
 
 use core::fmt::{Display, Formatter, Result as FmtResult};
 
-use node::Node;
+use {node::Node, uint::UnsignedInteger};
 
 
-pub struct LinkedMask {
-    data: Node
+pub struct LinkedMask<U>
+where
+    U: UnsignedInteger
+{
+    data: Node<U>
 }
 
-impl LinkedMask {
+impl<U> LinkedMask<U>
+where
+    U: UnsignedInteger
+{
     #[inline]
     #[must_use]
     #[expect(clippy::new_without_default, reason = "default would be empty")]
     pub fn new() -> Self {
-        Self { data: Node::default() }
+        Self { data: Node::<U>::default() }
     }
 
     #[inline]
-    pub fn add(&mut self, n: u16) {
+    pub fn add(&mut self, n: u32) {
         self.data.add(n);
     }
 }
 
-impl Display for LinkedMask {
+impl<U> Display for LinkedMask<U>
+where
+    U: UnsignedInteger
+{
     #[inline]
     fn fmt(&self, f: &mut Formatter) -> FmtResult {
         write!(f, "{}", self.data.get_string(true))

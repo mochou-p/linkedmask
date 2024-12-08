@@ -1,26 +1,32 @@
 // linkedmask/src/node.rs
 
-use super::color;
+use super::{color, uint::UnsignedInteger};
 
 
-pub(super) struct Node {
-    value:       u8,
+pub(super) struct Node<U>
+where
+    U: UnsignedInteger
+{
+    value:       U::T,
     next_option: Option<Box<Self>>
 }
 
-impl Node {
-    pub(super) fn add(&mut self, n: u16) {
-        if n >= 8 {
-            self.next_option.get_or_insert_with(Default::default).add(n - 8);
+impl<U> Node<U>
+where
+    U: UnsignedInteger
+{
+    pub(super) fn add(&mut self, n: u32) {
+        if n >= U::BITS {
+            self.next_option.get_or_insert_with(Default::default).add(n - U::BITS);
         } else {
-            self.value |= 1 << n;
+            self.value |= U::ONE.shl(n);
         }
     }
 
     #[must_use]
     pub(super) fn get_string(&self, indicator: bool) -> String {
         format!(
-            "{}{}{:08b}{}",
+            "{}{}{}{}",
             if let Some(next) = &self.next_option {
                 next.get_string(!indicator)
             } else {
@@ -31,17 +37,20 @@ impl Node {
             } else {
                 color::LIGHT
             },
-            self.value,
+            U::format(&self.value),
             color::RESET
         )
     }
 }
 
-impl Default for Node {
+impl<U> Default for Node<U>
+where
+    U: UnsignedInteger
+{
     #[inline]
     #[must_use]
     fn default() -> Self {
-        Self { value: 0, next_option: None }
+        Self { value: U::MIN, next_option: None }
     }
 }
 

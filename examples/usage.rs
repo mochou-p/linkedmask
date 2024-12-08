@@ -5,12 +5,12 @@ use linkedmask::LinkedMask;
 
 fn main() {
     {
-        let lm = LinkedMask::new();
+        let lm = LinkedMask::<u8>::new();
 
         println!("{lm}");
     }
     {
-        let mut lm = LinkedMask::new();
+        let mut lm = LinkedMask::<u8>::new();
 
         lm.add(0);
         lm.add(1);
@@ -19,7 +19,7 @@ fn main() {
         println!("{lm}");
     }
     {
-        let mut lm = LinkedMask::new();
+        let mut lm = LinkedMask::<u8>::new();
 
         lm.add( 1);
         lm.add( 2);
@@ -29,7 +29,7 @@ fn main() {
         println!("{lm}");
     }
     {
-        let mut lm = LinkedMask::new();
+        let mut lm = LinkedMask::<u16>::new();
 
         lm.add(23);
 
