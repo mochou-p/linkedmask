@@ -1,0 +1,5 @@
+# linkedmask/.gitignore
+
+target/
+Cargo.lock
+
