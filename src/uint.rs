@@ -1,17 +1,18 @@
 // linkedmask/src/uint.rs
 
-use core::{fmt::Binary, ops::BitOrAssign};
+use core::ops::BitOrAssign;
 
 
 pub trait UnsignedInteger: Sized {
-    type T: Binary + BitOrAssign;
+    type T: BitOrAssign;
 
     const MIN:  Self::T;
     const ONE:  Self;
-    const BITS: u32;
+    const MAX:  u128;
+    const BITS: u128;
 
-    fn format(value: &Self::T)   -> String;
-    fn shl   (&self, other: u32) -> Self::T;
+    fn from_u128(value: u128)      -> Self::T;
+    fn    format(value: &Self::T)  -> String;
 }
 
 macro_rules! impl_uint {
@@ -22,18 +23,19 @@ macro_rules! impl_uint {
 
                 const MIN:  Self::T = Self::MIN;
                 const ONE:  Self    = 1;
-                const BITS: u32     = Self::BITS;
+                const MAX:  u128    = Self::MAX  as u128;
+                const BITS: u128    = Self::BITS as u128;
+
+                #[inline]
+                #[must_use]
+                fn from_u128(value: u128) -> Self::T {
+                    $t::try_from(value).expect("unexpected overflow")
+                }
 
                 #[inline]
                 #[must_use]
                 fn format(value: &Self::T) -> String {
                     format!($fstring, value)
-                }
-
-                #[inline]
-                #[must_use]
-                fn shl(&self, other: u32) -> Self::T {
-                    self << other
                 }
             }
         )+

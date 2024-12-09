@@ -4,41 +4,25 @@ use linkedmask::LinkedMask;
 
 
 fn main() {
+    // every LinkedMask<T> grows to fit the biggest 1 bit
     {
         let mut lm = LinkedMask::<u8>::new();
 
-        lm.add(0);
-        lm.add(1);
-        lm.add(3);
-
-        println!("{lm}");
-    }
-    {
-        let mut lm = LinkedMask::<u8>::new();
-
-        lm.add( 1);
-        lm.add( 2);
-        lm.add( 5);
-        lm.add(14);
+        lm |= 1 << 26;
 
         println!("{lm}");
     }
     {
         let mut lm = LinkedMask::<u16>::new();
 
-        lm.add(23);
+        lm |= 1 << 26;
 
         println!("{lm}");
     }
     {
-        let mut lm = LinkedMask::<u8>::new();
+        let mut lm = LinkedMask::<u32>::new();
 
-        lm.add(50);
-
-        println!("{lm}");
-    }
-    {
-        let lm = LinkedMask::<usize>::new();
+        lm |= 1 << 26;
 
         println!("{lm}");
     }

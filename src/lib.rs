@@ -4,7 +4,7 @@ mod color;
 mod node;
 mod uint;
 
-use core::{any::type_name, fmt::{Display, Formatter, Result as FmtResult}};
+use core::{any::type_name, fmt::{Display, Formatter, Result as FmtResult}, ops::BitOrAssign};
 
 use {node::Node, uint::UnsignedInteger};
 
@@ -26,10 +26,15 @@ where
     pub fn new() -> Self {
         Self { data: Node::<U>::default() }
     }
+}
 
+impl<U> BitOrAssign<u128> for LinkedMask<U>
+where
+    U: UnsignedInteger
+{
     #[inline]
-    pub fn add(&mut self, n: u32) {
-        self.data.add(n);
+    fn bitor_assign(&mut self, rhs: u128) {
+        self.data |= rhs;
     }
 }
 
@@ -41,12 +46,7 @@ where
     fn fmt(&self, f: &mut Formatter) -> FmtResult {
         let (string, count) = self.data.get_string(true);
 
-        write!(
-            f,
-            "{}x{count}: {string}{}",
-            type_name::<U>(),
-            color::RESET
-        )
+        write!(f, "{}x{count}: {string}{}", type_name::<U>(), color::RESET)
     }
 }
 
