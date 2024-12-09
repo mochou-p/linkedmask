@@ -26,5 +26,15 @@ fn main() {
 
         println!("{lm}");
     }
+
+    // even any standard integer overflowing bit
+    {
+        let mut lm = LinkedMask::<u8>::new();
+
+        // functional equivalent of `lm |= 1 << 128` if it was possible
+        lm.bitor_assign_one_shl(128);
+
+        println!("{lm}");
+    }
 }
 

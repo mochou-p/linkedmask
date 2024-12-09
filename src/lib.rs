@@ -26,6 +26,11 @@ where
     pub fn new() -> Self {
         Self { data: Node::<U>::default() }
     }
+
+    #[inline]
+    pub fn bitor_assign_one_shl(&mut self, nth_bit: u128) {
+        self.data.bitor_assign_one_shl(nth_bit);
+    }
 }
 
 impl<U> BitOrAssign<u128> for LinkedMask<U>

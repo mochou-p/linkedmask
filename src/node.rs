@@ -40,6 +40,16 @@ where
             count
         )
     }
+
+    pub fn bitor_assign_one_shl(&mut self, nth_bit: u128) {
+        if nth_bit >= U::BITS {
+            self.next_option
+                .get_or_insert_with(Default::default)
+                .bitor_assign_one_shl(nth_bit - U::BITS);
+        } else {
+            self.value |= U::from_u128(1 << nth_bit);
+        }
+    }
 }
 
 impl<U> Default for Node<U>
