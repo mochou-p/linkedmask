@@ -70,6 +70,7 @@ where
     fn bitor_assign(&mut self, rhs: u128) {
         if rhs >= U::MAX {
             **self.next_option.get_or_insert_with(Default::default) |= rhs >> U::BITS;
+            self.value |= U::from_u128(rhs & U::MAX);
         } else {
             self.value |= U::from_u128(rhs);
         }
