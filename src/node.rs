@@ -3,7 +3,7 @@
 use super::{color, uint::UnsignedInteger};
 
 
-pub(super) struct Node<U>
+pub struct Node<U>
 where
     U: UnsignedInteger
 {
@@ -15,7 +15,7 @@ impl<U> Node<U>
 where
     U: UnsignedInteger
 {
-    pub(super) fn add(&mut self, n: u32) {
+    pub fn add(&mut self, n: u32) {
         if n >= U::BITS {
             self.next_option.get_or_insert_with(Default::default).add(n - U::BITS);
         } else {
@@ -24,16 +24,14 @@ where
     }
 
     #[must_use]
-    pub(super) fn get_string(&self, indicator: bool) -> (String, u16) {
+    pub fn get_string(&self, indicator: bool) -> (String, u16) {
         let mut count = 1;
 
-        let string = if let Some(next) = &self.next_option {
+        let string = self.next_option.as_ref().map_or_else(String::new, |next| {
             let (string_, count_) = next.get_string(!indicator);
             count += count_;
             string_
-        } else {
-            String::new()
-        };
+        });
 
         (
             format!(

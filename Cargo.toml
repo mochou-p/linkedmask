@@ -13,3 +13,12 @@ readme       = "README.md"
 license      = "MIT OR Apache-2.0"
 repository   = "https://github.com/mochou-p/linkedmask"
 
+keywords     = ["linkedmask", "bitmask", "linkedlist", "dynamic", "customisable"]
+categories   = ["data-structures", "rust-patterns", "development-tools"]
+
+[lints.clippy]
+all      = "deny"
+pedantic = "forbid"
+nursery  = "forbid"
+cargo    = "forbid"
+
