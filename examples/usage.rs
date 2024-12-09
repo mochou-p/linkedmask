@@ -5,11 +5,6 @@ use linkedmask::LinkedMask;
 
 fn main() {
     {
-        let lm = LinkedMask::<u8>::new();
-
-        println!("{lm}");
-    }
-    {
         let mut lm = LinkedMask::<u8>::new();
 
         lm.add(0);
@@ -39,6 +34,11 @@ fn main() {
         let mut lm = LinkedMask::<u8>::new();
 
         lm.add(50);
+
+        println!("{lm}");
+    }
+    {
+        let lm = LinkedMask::<usize>::new();
 
         println!("{lm}");
     }
