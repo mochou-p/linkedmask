@@ -47,7 +47,16 @@ where
                 .get_or_insert_with(Default::default)
                 .bitor_assign_n_shl(shiftee, offset - U::BITS);
         } else {
-            self.value |= U::from_u128(shiftee << offset);
+            let mut ptr  = self;
+            let mut frag = shiftee << offset;
+
+            while frag > U::MAX {
+                ptr.value  |= U::from_u128(frag & U::MAX);
+                ptr         = ptr.next_option.get_or_insert_with(Default::default);
+                frag      >>= U::BITS;
+            }
+
+            ptr.value |= U::from_u128(frag);
         }
     }
 }
