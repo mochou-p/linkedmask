@@ -28,8 +28,13 @@ where
     }
 
     #[inline]
+    pub fn bitor_assign_n_shl(&mut self, shiftee: u128, offset: u128) {
+        self.data.bitor_assign_n_shl(shiftee, offset);
+    }
+
+    #[inline]
     pub fn bitor_assign_one_shl(&mut self, nth_bit: u128) {
-        self.data.bitor_assign_one_shl(nth_bit);
+        self.bitor_assign_n_shl(1, nth_bit);
     }
 }
 

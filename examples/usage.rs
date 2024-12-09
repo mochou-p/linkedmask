@@ -34,6 +34,8 @@ fn main() {
         // functional equivalent of `lm |= 1 << 128` if it was possible
         lm.bitor_assign_one_shl(128);
 
+        lm.bitor_assign_n_shl(3, 130);
+
         println!("{lm}");
     }
 }

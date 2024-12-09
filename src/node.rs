@@ -41,13 +41,13 @@ where
         )
     }
 
-    pub fn bitor_assign_one_shl(&mut self, nth_bit: u128) {
-        if nth_bit >= U::BITS {
+    pub fn bitor_assign_n_shl(&mut self, shiftee: u128, offset: u128) {
+        if offset >= U::BITS {
             self.next_option
                 .get_or_insert_with(Default::default)
-                .bitor_assign_one_shl(nth_bit - U::BITS);
+                .bitor_assign_n_shl(shiftee, offset - U::BITS);
         } else {
-            self.value |= U::from_u128(1 << nth_bit);
+            self.value |= U::from_u128(shiftee << offset);
         }
     }
 }
