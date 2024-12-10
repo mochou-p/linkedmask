@@ -55,9 +55,21 @@ fn main() {
         let lm1 = LinkedMask::<u8>::new();
         let lm2 = LinkedMask::<u8>::from([1 << 0, 1 << 1, 1 << 2, 1 << 3]);
 
-        println!("{:?}\n{:?}", lm1.to_vec(), lm2.into_vec());
+        println!("{:?}\n{:?}\n", lm1.to_vec(), lm2.into_vec());
 
         // lm2 already dropped here
+    }
+
+    // get, get_mut
+    {
+        let mut lm = LinkedMask::<u8>::default();
+
+        println!("{lm}");
+
+        assert!(lm.get(1).is_none());
+        *lm.get_mut(0).unwrap() |= 1 << 2;
+
+        println!("{lm}");
     }
 }
 

@@ -76,6 +76,24 @@ where
             vec
         })
     }
+
+    #[must_use]
+    pub fn get(&self, index: u128) -> Option<&U::T> {
+        match (index, &self.next_option) {
+            (0, _         ) => Some(&self.value),
+            (_, Some(next)) => next.get(index - 1),
+            _               => None
+        }
+    }
+
+    #[must_use]
+    pub fn get_mut(&mut self, index: u128) -> Option<&mut U::T> {
+        match (index, &mut self.next_option) {
+            (0, _         ) => Some(&mut self.value),
+            (_, Some(next)) => next.get_mut(index - 1),
+            _               => None
+        }
+    }
 }
 
 impl<U> Default for Node<U>

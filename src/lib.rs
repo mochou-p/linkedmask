@@ -56,6 +56,18 @@ where
     pub fn into_vec(self) -> Vec<U::T> {
         self.to_vec()
     }
+
+    #[inline]
+    #[must_use]
+    pub fn get(&self, index: u128) -> Option<&U::T> {
+        self.data_option.as_ref().and_then(|data| data.get(index))
+    }
+
+    #[inline]
+    #[must_use]
+    pub fn get_mut(&mut self, index: u128) -> Option<&mut U::T> {
+        self.data_option.as_mut().and_then(|data| data.get_mut(index))
+    }
 }
 
 impl<U> Default for LinkedMask<U>
