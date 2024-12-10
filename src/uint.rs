@@ -4,7 +4,7 @@ use core::{fmt::Debug, ops::BitOrAssign};
 
 
 pub trait UnsignedInteger: Sized {
-    type T: BitOrAssign + Clone + Debug;
+    type T: BitOrAssign + Clone + Copy + Debug;
 
     const MIN:  Self::T;
     const MAX:  u128;

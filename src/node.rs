@@ -19,6 +19,13 @@ where
     U: UnsignedInteger
 {
     #[must_use]
+    pub fn from(slice: &[U::T]) -> Self {
+        let (first, rest) = slice.split_first().expect("unexpected slice error");
+
+        Self { value: *first, next_option: (!rest.is_empty()).then(|| Box::new(Self::from(rest))) }
+    }
+
+    #[must_use]
     pub fn get_string(&self, indicator: bool) -> (String, u16) {
         let mut count = 1;
 
@@ -48,16 +55,16 @@ where
                 .get_or_insert_with(Default::default)
                 .bitor_assign_n_shl(shiftee, offset - U::BITS);
         } else {
-            let mut ptr  = self;
-            let mut frag = shiftee << offset;
+            let mut ptr   = self;
+            let mut chunk = shiftee << offset;
 
-            while frag > U::MAX {
-                ptr.value  |= U::from_u128(frag & U::MAX);
+            while chunk > U::MAX {
+                ptr.value  |= U::from_u128(chunk & U::MAX);
                 ptr         = ptr.next_option.get_or_insert_with(Default::default);
-                frag      >>= U::BITS;
+                chunk     >>= U::BITS;
             }
 
-            ptr.value |= U::from_u128(frag);
+            ptr.value |= U::from_u128(chunk);
         }
     }
 }

@@ -28,6 +28,12 @@ where
     }
 
     #[inline]
+    #[must_use]
+    pub fn from<const N: usize>(array: [U::T; N]) -> Self {
+        Self { data_option: (!array.is_empty()).then(|| Node::from(&array)) }
+    }
+
+    #[inline]
     pub fn bitor_assign_n_shl(&mut self, shiftee: u128, offset: u128) {
         self.data_option
             .get_or_insert_with(Default::default)
