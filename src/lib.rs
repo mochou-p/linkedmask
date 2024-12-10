@@ -4,7 +4,7 @@ mod color;
 mod node;
 mod uint;
 
-use core::{any::type_name, fmt::{Display, Formatter, Result as FmtResult}, ops::BitOrAssign};
+use core::{any::type_name, fmt::{Display, Formatter, Result as FmtResult}, ops::{BitOrAssign, Index, IndexMut}};
 
 use {node::Node, uint::UnsignedInteger};
 
@@ -94,6 +94,30 @@ where
         let vec = iter.into_iter().collect::<Vec<U::T>>();
 
         Self { data_option: (!vec.is_empty()).then(|| Node::from(&vec)) }
+    }
+}
+
+impl<U> Index<u128> for LinkedMask<U>
+where
+    U: UnsignedInteger
+{
+    type Output = U::T;
+
+    #[inline]
+    #[must_use]
+    fn index(&self, index: u128) -> &Self::Output {
+        self.get(index).unwrap_or_else(|| panic!("linkedmask has less parts than {index}"))
+    }
+}
+
+impl<U> IndexMut<u128> for LinkedMask<U>
+where
+    U: UnsignedInteger
+{
+    #[inline]
+    #[must_use]
+    fn index_mut(&mut self, index: u128) -> &mut Self::Output {
+        self.get_mut(index).unwrap_or_else(|| panic!("linkedmask has less parts than {index}"))
     }
 }
 
