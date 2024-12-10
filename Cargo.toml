@@ -16,6 +16,13 @@ repository   = "https://github.com/mochou-p/linkedmask"
 keywords     = ["linkedmask", "bitmask", "linkedlist", "dynamic", "customisable"]
 categories   = ["data-structures", "rust-patterns", "development-tools"]
 
+[features]
+default = []
+serde_  = ["serde"]
+
+[dependencies]
+serde = { version = "1.0.215", features = ["derive"], optional = true }
+
 [lints.clippy]
 all      = "deny"
 pedantic = "forbid"

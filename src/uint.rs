@@ -2,8 +2,14 @@
 
 use core::{fmt::Debug, ops::BitOrAssign};
 
+#[cfg(feature = "serde_")]
+use serde::{Serialize, Deserialize};
+
 
 pub trait UnsignedInteger: Sized {
+    #[cfg(feature = "serde_")]
+    type T: BitOrAssign + Clone + Copy + Debug + Serialize + for<'de> Deserialize<'de>;
+    #[cfg(not(feature = "serde_"))]
     type T: BitOrAssign + Clone + Copy + Debug;
 
     const MIN:  Self::T;

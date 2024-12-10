@@ -8,7 +8,11 @@ use core::{any::type_name, fmt::{Display, Formatter, Result as FmtResult}, ops::
 
 use {node::Node, uint::UnsignedInteger};
 
+#[cfg(feature = "serde_")]
+use serde::{Serialize, Deserialize};
 
+
+#[cfg_attr(feature = "serde_", derive(Serialize, Deserialize))]
 #[derive(Clone, Debug)]
 pub struct LinkedMask<U>
 where

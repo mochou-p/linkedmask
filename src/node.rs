@@ -4,7 +4,11 @@ use core::ops::BitOrAssign;
 
 use super::{color, uint::UnsignedInteger};
 
+#[cfg(feature = "serde_")]
+use serde::{Serialize, Deserialize};
 
+
+#[cfg_attr(feature = "serde_", derive(Serialize, Deserialize))]
 #[derive(Clone, Debug)]
 pub struct Node<U>
 where
