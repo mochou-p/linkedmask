@@ -1,5 +1,7 @@
 // linkedmask/examples/usage.rs
 
+use core::iter::repeat;
+
 use linkedmask::LinkedMask;
 
 
@@ -39,12 +41,13 @@ fn main() {
         println!("{lm1}\n{lm2}\n");
     }
 
-    // from providing the chunks
+    // from array, or iterator
     {
         let lm1 = LinkedMask::<u8>::from([]);
         let lm2 = LinkedMask::<u8>::from([1, 0, 1 << 2]);
+        let lm3 = repeat(1 << 1).take(3).collect::<LinkedMask<u8>>();
 
-        println!("{lm1}\n{lm2}");
+        println!("{lm1}\n{lm2}\n{lm3}");
     }
 }
 

@@ -57,6 +57,20 @@ where
     }
 }
 
+impl<U> FromIterator<U::T> for LinkedMask<U>
+where
+    U: UnsignedInteger
+{
+    fn from_iter<T>(iter: T) -> Self
+    where
+        T: IntoIterator<Item = U::T>
+    {
+        let vec = iter.into_iter().collect::<Vec<U::T>>();
+
+        Self { data_option: (!vec.is_empty()).then(|| Node::from(&vec)) }
+    }
+}
+
 impl<U> BitOrAssign<u128> for LinkedMask<U>
 where
     U: UnsignedInteger
