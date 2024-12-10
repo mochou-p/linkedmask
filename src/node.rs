@@ -5,6 +5,7 @@ use core::ops::BitOrAssign;
 use super::{color, uint::UnsignedInteger};
 
 
+#[derive(Clone, Debug)]
 pub struct Node<U>
 where
     U: UnsignedInteger

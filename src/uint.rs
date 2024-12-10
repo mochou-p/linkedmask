@@ -1,13 +1,12 @@
 // linkedmask/src/uint.rs
 
-use core::ops::BitOrAssign;
+use core::{fmt::Debug, ops::BitOrAssign};
 
 
 pub trait UnsignedInteger: Sized {
-    type T: BitOrAssign;
+    type T: BitOrAssign + Clone + Debug;
 
     const MIN:  Self::T;
-    const ONE:  Self;
     const MAX:  u128;
     const BITS: u128;
 
@@ -22,7 +21,6 @@ macro_rules! impl_uint {
                 type T = Self;
 
                 const MIN:  Self::T = Self::MIN;
-                const ONE:  Self    = 1;
                 const MAX:  u128    = Self::MAX  as u128;
                 const BITS: u128    = Self::BITS as u128;
 
