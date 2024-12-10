@@ -50,6 +50,12 @@ where
     pub fn to_vec(&self) -> Vec<U::T> {
         self.data_option.as_ref().map_or_else(Vec::new, Node::to_vec)
     }
+
+    #[inline]
+    #[must_use]
+    pub fn into_vec(self) -> Vec<U::T> {
+        self.to_vec()
+    }
 }
 
 impl<U> Default for LinkedMask<U>

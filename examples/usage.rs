@@ -50,12 +50,14 @@ fn main() {
         println!("{lm1}\n{lm2}\n{lm3}\n");
     }
 
-    // to_vec for Vec<T> extraction
+    // to and into Vec<T>
     {
         let lm1 = LinkedMask::<u8>::new();
         let lm2 = LinkedMask::<u8>::from([1 << 0, 1 << 1, 1 << 2, 1 << 3]);
 
-        println!("{:?}\n{:?}", lm1.to_vec(), lm2.to_vec());
+        println!("{:?}\n{:?}", lm1.to_vec(), lm2.into_vec());
+
+        // lm2 already dropped here
     }
 }
 
