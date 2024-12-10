@@ -106,7 +106,7 @@ where
     #[inline]
     #[must_use]
     fn index(&self, index: u128) -> &Self::Output {
-        self.get(index).unwrap_or_else(|| panic!("linkedmask has less parts than {index}"))
+        self.get(index).unwrap_or_else(|| panic!("linkedmask has less parts than {}", index + 1))
     }
 }
 
@@ -117,7 +117,7 @@ where
     #[inline]
     #[must_use]
     fn index_mut(&mut self, index: u128) -> &mut Self::Output {
-        self.get_mut(index).unwrap_or_else(|| panic!("linkedmask has less parts than {index}"))
+        self.get_mut(index).unwrap_or_else(|| panic!("linkedmask has less parts than {}", index + 1))
     }
 }
 

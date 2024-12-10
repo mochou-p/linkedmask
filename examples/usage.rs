@@ -1,6 +1,9 @@
 // linkedmask/examples/usage.rs
 
-use core::iter::repeat;
+use {
+    core::{iter::repeat, panic::UnwindSafe},
+    std::panic::{catch_unwind, set_hook, take_hook}
+};
 
 use linkedmask::LinkedMask;
 
@@ -60,16 +63,34 @@ fn main() {
         // lm2 already dropped here
     }
 
-    // get, get_mut
+    // get, get_mut, Index, IndexMut
     {
-        let mut lm = LinkedMask::<u8>::default();
+        let mut lm1 = LinkedMask::<u8>::default();
+        let mut lm2 = LinkedMask::<u8>::default();
 
-        println!("{lm}");
+        println!("{lm1}, {lm2}");
 
-        assert!(lm.get(1).is_none());
-        *lm.get_mut(0).unwrap() |= 1 << 2;
+        assert!(lm1.get(1).is_none());
+        *lm1.get_mut(0).unwrap() |= 1 << 2;
 
-        println!("{lm}");
+        assert!(ensure_panic(|| { let _: u8 = lm2[1]; }));
+        lm2[0] |= 1 << 2;
+
+        println!("{lm1}, {lm2}");
     }
+}
+
+fn ensure_panic<F>(f: F) -> bool
+where
+    F: FnOnce() + UnwindSafe
+{
+    let original_hook = take_hook();
+    set_hook(Box::new(|_| {}));
+
+    let panicked = catch_unwind(f).is_err();
+
+    set_hook(original_hook);
+
+    panicked
 }
 
