@@ -44,6 +44,12 @@ where
     pub fn bitor_assign_one_shl(&mut self, nth_bit: u128) {
         self.bitor_assign_n_shl(1, nth_bit);
     }
+
+    #[inline]
+    #[must_use]
+    pub fn to_vec(&self) -> Vec<U::T> {
+        self.data_option.as_ref().map_or_else(Vec::new, Node::to_vec)
+    }
 }
 
 impl<U> Default for LinkedMask<U>
@@ -61,6 +67,8 @@ impl<U> FromIterator<U::T> for LinkedMask<U>
 where
     U: UnsignedInteger
 {
+    #[inline]
+    #[must_use]
     fn from_iter<T>(iter: T) -> Self
     where
         T: IntoIterator<Item = U::T>

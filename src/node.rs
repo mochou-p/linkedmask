@@ -67,6 +67,15 @@ where
             ptr.value |= U::from_u128(chunk);
         }
     }
+
+    #[must_use]
+    pub fn to_vec(&self) -> Vec<U::T> {
+        self.next_option.as_ref().map_or_else(|| vec![self.value], |next| {
+            let mut vec = vec![self.value];
+            vec.extend(next.to_vec());
+            vec
+        })
+    }
 }
 
 impl<U> Default for Node<U>
