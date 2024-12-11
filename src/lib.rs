@@ -96,6 +96,18 @@ where
     pub fn leading_zeros(&self) -> u128 {
         self.data_option.as_ref().map_or(0, Node::leading_zeros)
     }
+
+    #[inline]
+    #[must_use]
+    pub fn trailing_ones(&self) -> u128 {
+        self.data_option.as_ref().map_or(0, Node::trailing_ones)
+    }
+
+    #[inline]
+    #[must_use]
+    pub fn trailing_zeros(&self) -> u128 {
+        self.data_option.as_ref().map_or(0, Node::trailing_zeros)
+    }
 }
 
 impl<U> Default for LinkedMask<U>

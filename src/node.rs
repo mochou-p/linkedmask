@@ -134,6 +134,28 @@ where
             count
         })
     }
+
+    #[must_use]
+    pub fn trailing_ones(&self) -> u128 {
+        let mut count = U::trailing_ones(&self.value);
+
+        if count == U::BITS { if let Some(next) = &self.next_option {
+            count += next.trailing_ones();
+        } }
+
+        count
+    }
+
+    #[must_use]
+    pub fn trailing_zeros(&self) -> u128 {
+        let mut count = U::trailing_zeros(&self.value);
+
+        if count == U::BITS { if let Some(next) = &self.next_option {
+            count += next.trailing_zeros();
+        } }
+
+        count
+    }
 }
 
 impl<U> Default for Node<U>
