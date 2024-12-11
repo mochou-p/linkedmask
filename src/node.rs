@@ -108,6 +108,32 @@ where
     pub fn count_zeros(&self) -> u128 {
         U::count_zeros(&self.value) + self.next_option.as_ref().map_or(0, |next| next.count_zeros())
     }
+
+    #[must_use]
+    pub fn leading_ones(&self) -> u128 {
+        self.next_option.as_ref().map_or_else(|| U::leading_ones(&self.value), |next| {
+            let mut count = next.leading_ones();
+
+            if count != 0 && count % U::BITS == 0 {
+                count += U::leading_ones(&self.value);
+            }
+
+            count
+        })
+    }
+
+    #[must_use]
+    pub fn leading_zeros(&self) -> u128 {
+        self.next_option.as_ref().map_or_else(|| U::leading_zeros(&self.value), |next| {
+            let mut count = next.leading_zeros();
+
+            if count != 0 && count % U::BITS == 0 {
+                count += U::leading_zeros(&self.value);
+            }
+
+            count
+        })
+    }
 }
 
 impl<U> Default for Node<U>

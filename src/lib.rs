@@ -84,6 +84,18 @@ where
     pub fn count_zeros(&self) -> u128 {
         self.data_option.as_ref().map_or(0, Node::count_zeros)
     }
+
+    #[inline]
+    #[must_use]
+    pub fn leading_ones(&self) -> u128 {
+        self.data_option.as_ref().map_or(0, Node::leading_ones)
+    }
+
+    #[inline]
+    #[must_use]
+    pub fn leading_zeros(&self) -> u128 {
+        self.data_option.as_ref().map_or(0, Node::leading_zeros)
+    }
 }
 
 impl<U> Default for LinkedMask<U>

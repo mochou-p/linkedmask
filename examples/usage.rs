@@ -81,9 +81,13 @@ fn main() {
 
     // binary helpers
     {
-        let lm = LinkedMask::<u8>::from([(1 << 3) - 1]);
+        let lm1 = LinkedMask::<u8>::from([0, 15 << 2, 0]);
+        let lm2 = LinkedMask::<u8>::from([ 0,   (1 << 7) + (1 << 3),   u8::MAX]);
+        let lm3 = LinkedMask::<u8>::from([!0, !((1 << 7) + (1 << 3)), !u8::MAX]);
 
-        println!("{lm}\nones: {}, zeros: {}", lm.count_ones(), lm.count_zeros());
+        println!("{lm1}, ones: {}, zeros: {}", lm1.count_ones(), lm1.count_zeros());
+        println!("{lm2}, leading ones: {}", lm2.leading_ones());
+        println!("{lm3}, leading zeros: {}", lm3.leading_zeros());
     }
 }
 
