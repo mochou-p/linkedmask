@@ -1,6 +1,6 @@
 // linkedmask/src/uint.rs
 
-use core::{fmt::Debug, ops::BitOrAssign};
+use core::{fmt::Debug, hash::Hash, ops::BitOrAssign};
 
 use super::binary::BinaryHelpers;
 
@@ -10,9 +10,9 @@ use serde::{Serialize, Deserialize};
 
 pub trait UnsignedInteger: Sized {
     #[cfg(feature = "serde_")]
-    type T: BinaryHelpers + BitOrAssign + Clone + Copy + Debug + Serialize + for<'de> Deserialize<'de>;
+    type T: BinaryHelpers + BitOrAssign + Clone + Copy + Debug + Hash + Serialize + for<'de> Deserialize<'de>;
     #[cfg(not(feature = "serde_"))]
-    type T: BinaryHelpers + BitOrAssign + Clone + Copy + Debug;
+    type T: BinaryHelpers + BitOrAssign + Clone + Copy + Debug + Hash;
 
     const MIN:  Self::T;
     const MAX:  u128;

@@ -9,7 +9,7 @@ use serde::{Serialize, Deserialize};
 
 
 #[cfg_attr(feature = "serde_", derive(Serialize, Deserialize))]
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Hash)]
 pub struct Node<U>
 where
     U: UnsignedInteger
