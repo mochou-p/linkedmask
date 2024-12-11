@@ -1,5 +1,8 @@
 // linkedmask/src/lib.rs
 
+#![expect(clippy::module_name_repetitions, reason = "structure preference")]
+
+mod binary;
 mod color;
 mod node;
 mod uint;

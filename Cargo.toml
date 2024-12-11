@@ -25,7 +25,7 @@ serde = { version = "1.0.215", features = ["derive"], optional = true }
 
 [lints.clippy]
 all      = "deny"
-pedantic = "forbid"
+pedantic = "deny"
 nursery  = "forbid"
 cargo    = "forbid"
 

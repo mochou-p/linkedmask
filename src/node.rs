@@ -2,7 +2,7 @@
 
 use core::ops::BitOrAssign;
 
-use super::{color, uint::UnsignedInteger};
+use super::{binary::BinaryHelpers as _, color, uint::UnsignedInteger};
 
 #[cfg(feature = "serde_")]
 use serde::{Serialize, Deserialize};
@@ -101,21 +101,21 @@ where
 
     #[must_use]
     pub fn count_ones(&self) -> u128 {
-        U::count_ones(&self.value) + self.next_option.as_ref().map_or(0, |next| next.count_ones())
+        self.value.count_1s() + self.next_option.as_ref().map_or(0, |next| next.count_ones())
     }
 
     #[must_use]
     pub fn count_zeros(&self) -> u128 {
-        U::count_zeros(&self.value) + self.next_option.as_ref().map_or(0, |next| next.count_zeros())
+        self.value.count_0s() + self.next_option.as_ref().map_or(0, |next| next.count_zeros())
     }
 
     #[must_use]
     pub fn leading_ones(&self) -> u128 {
-        self.next_option.as_ref().map_or_else(|| U::leading_ones(&self.value), |next| {
+        self.next_option.as_ref().map_or_else(|| self.value.leading_1s(), |next| {
             let mut count = next.leading_ones();
 
             if count != 0 && count % U::BITS == 0 {
-                count += U::leading_ones(&self.value);
+                count += self.value.leading_1s();
             }
 
             count
@@ -124,11 +124,11 @@ where
 
     #[must_use]
     pub fn leading_zeros(&self) -> u128 {
-        self.next_option.as_ref().map_or_else(|| U::leading_zeros(&self.value), |next| {
+        self.next_option.as_ref().map_or_else(|| self.value.leading_0s(), |next| {
             let mut count = next.leading_zeros();
 
             if count != 0 && count % U::BITS == 0 {
-                count += U::leading_zeros(&self.value);
+                count += self.value.leading_0s();
             }
 
             count
@@ -137,7 +137,7 @@ where
 
     #[must_use]
     pub fn trailing_ones(&self) -> u128 {
-        let mut count = U::trailing_ones(&self.value);
+        let mut count = self.value.trailing_1s();
 
         if count == U::BITS { if let Some(next) = &self.next_option {
             count += next.trailing_ones();
@@ -148,7 +148,7 @@ where
 
     #[must_use]
     pub fn trailing_zeros(&self) -> u128 {
-        let mut count = U::trailing_zeros(&self.value);
+        let mut count = self.value.trailing_0s();
 
         if count == U::BITS { if let Some(next) = &self.next_option {
             count += next.trailing_zeros();

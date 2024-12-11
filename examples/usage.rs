@@ -86,7 +86,7 @@ fn main() {
         let lm3 = LinkedMask::<u8>::from([0,       !((1 << 7) + (1 << 3) + 3), 0      ]);
 
         println!("{lm1}: ones: {}, zeros: {}", lm1.count_ones(), lm1.count_zeros());
-        println!("{lm2}: leading ones: {}, trailing_ones: {}", lm2.leading_ones(), lm2.trailing_ones());
+        println!("{lm2}: leading ones:  {}, trailing_ones:  {}", lm2.leading_ones(),  lm2.trailing_ones());
         println!("{lm3}: leading zeros: {}, trailing_zeros: {}", lm3.leading_zeros(), lm3.trailing_zeros());
     }
 }
