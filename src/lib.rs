@@ -72,6 +72,18 @@ where
     pub fn get_mut(&mut self, index: u128) -> Option<&mut U::T> {
         self.data_option.as_mut().and_then(|data| data.get_mut(index))
     }
+
+    #[inline]
+    #[must_use]
+    pub fn count_ones(&self) -> u128 {
+        self.data_option.as_ref().map_or(0, Node::count_ones)
+    }
+
+    #[inline]
+    #[must_use]
+    pub fn count_zeros(&self) -> u128 {
+        self.data_option.as_ref().map_or(0, Node::count_zeros)
+    }
 }
 
 impl<U> Default for LinkedMask<U>

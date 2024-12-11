@@ -76,7 +76,14 @@ fn main() {
         assert!(ensure_panic(|| { let _: u8 = lm2[1]; }));
         lm2[0] |= 1 << 2;
 
-        println!("{lm1}, {lm2}");
+        println!("{lm1}, {lm2}\n");
+    }
+
+    // binary helpers
+    {
+        let lm = LinkedMask::<u8>::from([(1 << 3) - 1]);
+
+        println!("{lm}\nones: {}, zeros: {}", lm.count_ones(), lm.count_zeros());
     }
 }
 

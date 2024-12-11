@@ -16,8 +16,10 @@ pub trait UnsignedInteger: Sized {
     const MAX:  u128;
     const BITS: u128;
 
-    fn from_u128(value: u128)      -> Self::T;
-    fn    format(value: &Self::T)  -> String;
+    fn   from_u128(value: u128)     -> Self::T;
+    fn      format(value: &Self::T) -> String;
+    fn  count_ones(value: &Self::T) -> u128;
+    fn count_zeros(value: &Self::T) -> u128;
 }
 
 macro_rules! impl_uint {
@@ -40,6 +42,18 @@ macro_rules! impl_uint {
                 #[must_use]
                 fn format(value: &Self::T) -> String {
                     format!($fstring, value)
+                }
+
+                #[inline]
+                #[must_use]
+                fn count_ones(value: &Self::T) -> u128 {
+                    u128::from(value.count_ones())
+                }
+
+                #[inline]
+                #[must_use]
+                fn count_zeros(value: &Self::T) -> u128 {
+                    u128::from(value.count_zeros())
                 }
             }
         )+

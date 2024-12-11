@@ -98,6 +98,16 @@ where
             _               => None
         }
     }
+
+    #[must_use]
+    pub fn count_ones(&self) -> u128 {
+        U::count_ones(&self.value) + self.next_option.as_ref().map_or(0, |next| next.count_ones())
+    }
+
+    #[must_use]
+    pub fn count_zeros(&self) -> u128 {
+        U::count_zeros(&self.value) + self.next_option.as_ref().map_or(0, |next| next.count_zeros())
+    }
 }
 
 impl<U> Default for Node<U>
