@@ -29,6 +29,14 @@ where
         Self { value: *first, next_option: (!rest.is_empty()).then(|| Box::new(Self::from(rest))) }
     }
 
+    pub fn not(&mut self) {
+        self.value.not();
+
+        if let Some(next) = self.next_option.as_mut() {
+            next.not();
+        }
+    }
+
     #[must_use]
     pub fn get_string(&self, indicator: bool) -> (String, u16) {
         let mut count = 1;

@@ -83,7 +83,7 @@ fn main() {
     {
         let lm1 = LinkedMask::<u8>::from([0, 15 << 2, 0]);
         let lm2 = LinkedMask::<u8>::from([u8::MAX,   (1 << 7) + (1 << 3) + 3,  u8::MAX]);
-        let lm3 = LinkedMask::<u8>::from([0,       !((1 << 7) + (1 << 3) + 3), 0      ]);
+        let lm3 = !lm2.clone();
 
         println!("{lm1}: ones: {}, zeros: {}", lm1.count_ones(), lm1.count_zeros());
         println!("{lm2}: leading ones:  {}, trailing_ones:  {}", lm2.leading_ones(),  lm2.trailing_ones());

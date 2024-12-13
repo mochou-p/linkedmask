@@ -1,6 +1,8 @@
 // linkedmask/src/binary.rs
 
 pub trait BinaryHelpers {
+    fn not(&mut self);
+
     fn    count_1s(&self) -> u128;
     fn    count_0s(&self) -> u128;
     fn  leading_1s(&self) -> u128;
@@ -13,6 +15,11 @@ macro_rules! impl_bh {
     ($($t:tt),+) => {
         $(
             impl BinaryHelpers for $t {
+                #[inline]
+                fn not(&mut self) {
+                    *self = !*self
+                }
+
                 #[inline]
                 #[must_use]
                 fn count_1s(&self) -> u128 {

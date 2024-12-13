@@ -7,7 +7,7 @@ mod color;
 mod node;
 mod uint;
 
-use core::{any::type_name, fmt::{Display, Formatter, Result as FmtResult}, ops::{BitOrAssign, Index, IndexMut}};
+use core::{any::type_name, fmt::{Display, Formatter, Result as FmtResult}, ops::{BitOrAssign, Index, IndexMut, Not}};
 
 use {node::Node, uint::UnsignedInteger};
 
@@ -110,6 +110,20 @@ where
     #[must_use]
     pub fn trailing_zeros(&self) -> u128 {
         self.data_option.as_ref().map_or(0, Node::trailing_zeros)
+    }
+}
+
+impl<U> Not for LinkedMask<U>
+where
+    U: UnsignedInteger
+{
+    type Output = Self;
+
+    #[inline]
+    #[must_use]
+    fn not(mut self) -> Self::Output {
+        self.data_option.as_mut().map(Node::not);
+        self
     }
 }
 
